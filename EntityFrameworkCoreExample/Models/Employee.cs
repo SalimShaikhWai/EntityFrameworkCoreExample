@@ -10,13 +10,28 @@ namespace EntityFrameworkCoreExample.Models
         [Column("employee_id")]
         public int Id { get; set; }
         [Column("employee_name")]
-        public string Name { get; set; }    
+        public string Name { get; set; }
 
         [Column("department_ref_id")]
         public int DepartmentRefId { get; set; }
+
+        [ForeignKey("DepartmentRefId")]
+        public Department Department { get; set; }
+
         [Column("salary")]
         public int Salary { get; set; }
         [Column("adrees")]
-        public int Address { get; set; }
+        public string Address { get; set; }
+
+        //[Column("manager_id")]
+        //public int ManagerId { get; set; }
+        //[ForeignKey("ManagerId")]
+        //public Employee Manager { get; set; }
+
+        [Column("job_id")]
+        public int JobId { get; set; }
+        [ForeignKey("JobId")]
+        public Job Job { get; set; }
+
     }
 }

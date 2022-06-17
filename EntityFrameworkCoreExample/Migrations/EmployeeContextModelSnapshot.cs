@@ -40,6 +40,8 @@ namespace EntityFrameworkCoreExample.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LocationRefId");
+
                     b.ToTable("department");
                 });
 
@@ -52,13 +54,17 @@ namespace EntityFrameworkCoreExample.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Address")
-                        .HasColumnType("int")
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("adrees");
 
                     b.Property<int>("DepartmentRefId")
                         .HasColumnType("int")
                         .HasColumnName("department_ref_id");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int")
+                        .HasColumnName("job_id");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
@@ -70,7 +76,37 @@ namespace EntityFrameworkCoreExample.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentRefId");
+
+                    b.HasIndex("JobId");
+
                     b.ToTable("employee");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCoreExample.Models.Job", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("job_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("MaxSalary")
+                        .HasColumnType("int")
+                        .HasColumnName("max_salary");
+
+                    b.Property<int>("MinSalary")
+                        .HasColumnType("int")
+                        .HasColumnName("min_salary");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("job_name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("job");
                 });
 
             modelBuilder.Entity("EntityFrameworkCoreExample.Models.Location", b =>
@@ -93,6 +129,36 @@ namespace EntityFrameworkCoreExample.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("location");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCoreExample.Models.Department", b =>
+                {
+                    b.HasOne("EntityFrameworkCoreExample.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationRefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCoreExample.Models.Employee", b =>
+                {
+                    b.HasOne("EntityFrameworkCoreExample.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentRefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityFrameworkCoreExample.Models.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Job");
                 });
 #pragma warning restore 612, 618
         }

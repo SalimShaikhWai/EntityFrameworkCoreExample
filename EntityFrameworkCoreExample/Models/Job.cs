@@ -3,16 +3,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFrameworkCoreExample.Models
 {
-    [Table("location")]
-    public class Location
+
+    [Table("job")]
+    public class Job
     {
         [Key]
-        [Column("location_id")]
+        [Column("job_id")]
         public int Id { get; set; }
-        [Column("location_name")]
+        [Column("job_name")]
         public string Name { get; set; }
 
-        [Column("location_pincode")]
-        public string Pincode { get; set; }
+        [Column("min_salary")]
+        public int MinSalary { get; set; }
+
+        [Column("max_salary")]
+        public int MaxSalary { get; set; }
+
+
     }
 }

@@ -1,0 +1,27 @@
+﻿@model Department
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}<div class="container">
+    <form method="post" asp-controller="Department" asp-action="CreateDepartment">
+        <div class="row">
+            <div class="form-control">
+                <label>Department-Name</label>
+                <input type="text" asp-for="Name" />
+            </div>
+            <div class="form-control">
+                <label>Location-Id</label>
+                <input type="text" asp-for="LocationRefId" />
+            </div>
+            <div class="form-control">
+                <input type="submit" values="Submit" />
+                <input type="reset" values="Cancel" />
+            </div>
+        </div>
+    </form>
+</div>
+Part 3, add a view to an ASP.NET Core MVC app
+Part 3 of tutorial series on ASP.NET Core MVC.
+
+
